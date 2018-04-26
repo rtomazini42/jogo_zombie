@@ -31,7 +31,7 @@ void rick() {
 	} while (tabuleiro[rickX][rickY] != 0);
 
 	tabuleiro[rickX][rickY] = 1;
-	printf("Rick começou em %d %d\n", rickX,rickY);
+	printf("Rick comecou em %d %d\n", rickX,rickY);
 }
 
 void imprime_tab() {
@@ -147,6 +147,7 @@ void mover(char direcao){
 }
 
 int main(){
+    printf("Legendas:\n1 : Jogador \n2 : Zumbi\n3 : carros \n4 : Arvores\n5 : Pedras\n9 : Balas\n7 : Saida\n");
     srand(time(0));
     inicia_tab();
     rick();
