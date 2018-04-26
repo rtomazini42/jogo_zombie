@@ -5,8 +5,13 @@
 int tabuleiro[10][10];
 int rickY,rickX;
 int zumbis = 15;
+int arma = 0, morreu = 0;
+
 
 int acabou(){
+    if (morreu == 1){
+        return 1;
+    }
     return 0;
 }
 
@@ -40,9 +45,10 @@ void imprime_tab() {
 
 	}
 	printf("--------------------------------\n");
+	printf("Voce tem %d balas\n Qual o movimento?\n", arma);
 }
 
-void inimigos() {
+void pos_inimigos() {
 	int aleY = rand() % 10;
 	int aleX = rand() % 10;
 	if (tabuleiro[aleX][aleY] == 0) {
@@ -89,34 +95,63 @@ void mover(char direcao){
 
     switch(direcao){
         case 'a':
+            if (tabuleiro[rickX][rickY-1] == 3 || tabuleiro[rickX][rickY-1] == 4 || tabuleiro[rickX][rickY-1] == 5 || (rickY -1) < 0){
+                printf("Bateu em obstaculo, nao pode passar\n");
+                break;}
             tabuleiro[rickX][rickY] = 0;
             rickY = rickY - 1;
             break;
+
         case 'd':
+            if (tabuleiro[rickX][rickY+1] == 3 || tabuleiro[rickX][rickY+1] == 4 || tabuleiro[rickX][rickY+1] == 5 || (rickY +1) > 9){
+                printf("Bateu em obstaculo, nao pode passar\n");
+                break;}
             tabuleiro[rickX][rickY] = 0;
             rickY = rickY + 1;
             break;
+
         case 's':
+            if (tabuleiro[rickX+1][rickY] == 3 || tabuleiro[rickX+1][rickY] == 4 || tabuleiro[rickX+1][rickY] == 5 || (rickX +1) > 9){
+                printf("Bateu em obstaculo, nao pode passar\n");
+                break;}
             tabuleiro[rickX][rickY] = 0;
             rickX = rickX + 1;
             break;
+
         case 'w':
+            if (tabuleiro[rickX-1][rickY] == 3 || tabuleiro[rickX-1][rickY] == 4 || tabuleiro[rickX-1][rickY] == 5 || (rickX -1) < 0){
+                    printf("Bateu em obstaculo, nao pode passar\n");
+                    break;}
             tabuleiro[rickX][rickY] = 0;
             rickX = rickX - 1;
             break;
 
     }
+    if (tabuleiro[rickX][rickY] == 2){
+        if (arma > 0){
+        printf("\n Matou um zumbi!!!\n\n");
+        arma--;
+        }
+        else if (arma == 0){
+        printf("\n Um Zumbi pegou voce, fim de jogo\n\n morreu!");
+        morreu = 1;
+        }
+    }
+    if (tabuleiro[rickX][rickY] == 9){
+        arma++;
+        }
+
+
     tabuleiro[rickX][rickY] = 1;
     printf("Esta em %d %d\n", rickX,rickY);
 }
 
 int main(){
-    int arma = 0;
     srand(time(0));
     inicia_tab();
     rick();
     while(zumbis != 0){
-        inimigos();
+        pos_inimigos();
         zumbis--;
     }
     objetos();
@@ -124,7 +159,7 @@ int main(){
     char comando;
     scanf(" %c", &comando);
     mover(comando);
-
+    //fim = 0;
     }while(!acabou());
 
 
