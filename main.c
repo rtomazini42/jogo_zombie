@@ -58,6 +58,54 @@ void pos_inimigos() {
 		zumbis++;
 	}}
 
+void move_zomb(){
+    for(int i = 0; i < 10; i++){
+        for(int j = 0; j < 10; j++){
+            if (tabuleiro[i][j] == 2){
+                int escolha = rand() % 4;
+                switch(escolha){
+                        case 0:
+                            if (tabuleiro[i][j-1] == 3 || tabuleiro[i][j-1] == 4 || tabuleiro[i][j-1] == 5 || tabuleiro[i][j-1] == 7 || (j -1) < 0){
+                                //printf("Bateu em obstaculo, nao pode passar\n");
+                                break;}
+                            tabuleiro[i][j] = 0;
+                            j = j - 1;
+                            break;
+
+                        case 1:
+                            if (tabuleiro[i][j+1] == 3 || tabuleiro[i][j+1] == 4 || tabuleiro[i][j+1] == 5 || tabuleiro[i][j-1] == 7 || (j +1) > 9){
+                                //printf("Bateu em obstaculo, nao pode passar\n");
+                                break;}
+                            tabuleiro[i][j] = 0;
+                            j = j + 1;
+                            break;
+
+                        case 2:
+                            if (tabuleiro[i+1][j] == 3 || tabuleiro[i+1][j] == 4 || tabuleiro[i+1][j] == 5 || tabuleiro[i][j-1] == 7 || (i +1) > 9){
+                                //printf("Bateu em obstaculo, nao pode passar\n");
+                                break;}
+                            tabuleiro[i][j] = 0;
+                            i = i + 1;
+                            break;
+
+                        case 3:
+                            if (tabuleiro[i-1][j] == 3 || tabuleiro[i-1][j] == 4 || tabuleiro[i-1][j] == 5 || tabuleiro[i][j-1] == 7 || (i -1) < 0){
+                                    //printf("Bateu em obstaculo, nao pode passar\n");
+                                    break;}
+                            tabuleiro[i][j] = 0;
+                            i = i - 1;
+                            break;
+
+                    }
+
+                        tabuleiro[i][j] = 2;
+                        printf("Esta em %d %d\n", i,j);}
+
+            }
+        }
+    }
+
+
 void objetos(){
     int carros = 4, arvores = 7, pedras = 8, balas = 4,saida = 1;
 
@@ -173,6 +221,7 @@ int main(){
     char comando;
     scanf(" %c", &comando);
     mover(comando);
+    move_zomb();
     //fim = 0;
     }while(!acabou());
 
