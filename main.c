@@ -5,11 +5,11 @@
 int tabuleiro[10][10];
 int rickY,rickX;
 int zumbis = 15;
-int arma = 0, morreu = 0;
+int arma = 0, cabo = 0;
 
 
 int acabou(){
-    if (morreu == 1){
+    if (cabo == 1){
         return 1;
     }
     return 0;
@@ -59,7 +59,7 @@ void pos_inimigos() {
 	}}
 
 void objetos(){
-    int carros = 4, arvores = 7, pedras = 8, balas = 4;
+    int carros = 4, arvores = 7, pedras = 8, balas = 4,saida = 1;
 
 	while(carros != 0){
         int aleY = rand() % 10;
@@ -89,6 +89,14 @@ void objetos(){
             tabuleiro[aleX][aleY] = 9;
             balas--;}
 	}
+    while(saida != 0){
+        int aleY = rand() % 10;
+        int aleX = rand() % 10;
+        if (tabuleiro[aleX][aleY] == 0) {
+            tabuleiro[aleX][aleY] = 7;
+            saida--;}
+
+}
 }
 
 void mover(char direcao){
@@ -134,11 +142,16 @@ void mover(char direcao){
         }
         else if (arma == 0){
         printf("\n Um Zumbi pegou voce, fim de jogo\n\n morreu!");
-        morreu = 1;
+        cabo = 1;
         }
     }
     if (tabuleiro[rickX][rickY] == 9){
         arma++;
+        }
+
+    if (tabuleiro[rickX][rickY] == 7){
+        printf("\n\n\nVoce fugiu!\n\n\n");
+        cabo =1;
         }
 
 
