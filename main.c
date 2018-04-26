@@ -4,7 +4,7 @@
 //4 carros, 7 arvores, 8 pedras
 int tabuleiro[10][10];
 int rickY,rickX;
-int zumbis = 15;
+int zumbis = 10;
 int arma = 0, cabo = 0;
 
 
@@ -65,7 +65,7 @@ void move_zomb(){
                 int escolha = rand() % 4;
                 switch(escolha){
                         case 0:
-                            if (tabuleiro[i][j-1] == 3 || tabuleiro[i][j-1] == 4 || tabuleiro[i][j-1] == 5 || tabuleiro[i][j-1] == 7 ||  (j -1) < 0){
+                            if (tabuleiro[i][j-1] !=0 && tabuleiro[i][j-1] !=1 ||  (j -1) < 0){
                                 //printf("Bateu em obstaculo, nao pode passar\n");
                                 break;}
                             if (tabuleiro[i][j-1] == 1){
@@ -83,14 +83,12 @@ void move_zomb(){
                             break;
 
                         case 1:
-                            if (tabuleiro[i][j+1] == 3 || tabuleiro[i][j+1] == 4 || tabuleiro[i][j+1] == 5 || tabuleiro[i][j-1] == 7 || (j +1) > 9){
+                            if (tabuleiro[i][j+1] !=0 && tabuleiro[i][j+1] !=1 || (j+1) > 9){
                                 //printf("Bateu em obstaculo, nao pode passar\n");
                                 break;}
 
-                            tabuleiro[i][j] = 0;
-                            j = j + 1;
-                            break;
-                            if (tabuleiro[i][j-1] == 1){
+
+                            if (tabuleiro[i][j+1] == 1){
                                 if (arma > 0){
                                     printf("\n Matou um zumbi!!!\n\n");
                                     arma--;
@@ -106,10 +104,10 @@ void move_zomb(){
 
 
                         case 2:
-                            if (tabuleiro[i+1][j] == 3 || tabuleiro[i+1][j] == 4 || tabuleiro[i+1][j] == 5 || tabuleiro[i][j-1] == 7 || (i +1) > 9){
+                            if (tabuleiro[i+1][j] !=0 && tabuleiro[i+1][j] !=1 || (i+1) > 9){
                                 //printf("Bateu em obstaculo, nao pode passar\n");
                                 break;}
-                            if (tabuleiro[i][j-1] == 1){
+                            if (tabuleiro[i+1][j] == 1){
                                 if (arma > 0){
                                     printf("\n Matou um zumbi!!!\n\n");
                                     arma--;
@@ -126,13 +124,11 @@ void move_zomb(){
                             break;
 
                         case 3:
-                            if (tabuleiro[i-1][j] == 3 || tabuleiro[i-1][j] == 4 || tabuleiro[i-1][j] == 5 || tabuleiro[i][j-1] == 7 || (i -1) < 0){
+                            if (tabuleiro[i-1][j] !=0 && tabuleiro[i-1][j] !=1 || (i-1) < 0){
                                     //printf("Bateu em obstaculo, nao pode passar\n");
                                     break;}
-                            tabuleiro[i][j] = 0;
-                            i = i - 1;
-                            break;
-                            if (tabuleiro[i][j-1] == 1){
+;
+                            if (tabuleiro[i-1][j] == 1){
                                 if (arma > 0){
                                     printf("\n Matou um zumbi!!!\n\n");
                                     arma--;
@@ -142,11 +138,16 @@ void move_zomb(){
                                 cabo = 1;
                                 }
                             }
+                            tabuleiro[i][j] = 0;
+                            i = i - 1;
+                            break;
+
 
                     }
 
                         tabuleiro[i][j] = 2;
-                        printf("Esta em %d %d\n", i,j);}
+                        //printf("Esta em %d %d\n", i,j);
+                        }
 
             }
         }
@@ -271,6 +272,6 @@ int main(){
     move_zomb();
     //fim = 0;
     }while(!acabou());
-
+    imprime_tab();
 
     }
