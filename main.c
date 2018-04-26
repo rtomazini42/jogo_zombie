@@ -6,6 +6,10 @@ int tabuleiro[10][10];
 int rickY,rickX;
 int zumbis = 15;
 
+int acabou(){
+    return 0;
+}
+
 void inicia_tab() {
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
@@ -22,6 +26,7 @@ void rick() {
 	} while (tabuleiro[rickX][rickY] != 0);
 
 	tabuleiro[rickX][rickY] = 1;
+	printf("Rick começou em %d %d\n", rickX,rickY);
 }
 
 void imprime_tab() {
@@ -48,7 +53,7 @@ void inimigos() {
 	}}
 
 void objetos(){
-    int carros = 4, arvores = 7, pedras = 8;
+    int carros = 4, arvores = 7, pedras = 8, balas = 4;
 
 	while(carros != 0){
         int aleY = rand() % 10;
@@ -71,11 +76,42 @@ void objetos(){
             tabuleiro[aleX][aleY] = 5;
             pedras--;}
 	}
+        while(balas != 0){
+        int aleY = rand() % 10;
+        int aleX = rand() % 10;
+        if (tabuleiro[aleX][aleY] == 0) {
+            tabuleiro[aleX][aleY] = 9;
+            balas--;}
+	}
 }
 
+void mover(char direcao){
+
+    switch(direcao){
+        case 'a':
+            tabuleiro[rickX][rickY] = 0;
+            rickY = rickY - 1;
+            break;
+        case 'd':
+            tabuleiro[rickX][rickY] = 0;
+            rickY = rickY + 1;
+            break;
+        case 's':
+            tabuleiro[rickX][rickY] = 0;
+            rickX = rickX + 1;
+            break;
+        case 'w':
+            tabuleiro[rickX][rickY] = 0;
+            rickX = rickX - 1;
+            break;
+
+    }
+    tabuleiro[rickX][rickY] = 1;
+    printf("Esta em %d %d\n", rickX,rickY);
+}
 
 int main(){
-    int balas = 0;
+    int arma = 0;
     srand(time(0));
     inicia_tab();
     rick();
@@ -84,6 +120,12 @@ int main(){
         zumbis--;
     }
     objetos();
-    imprime_tab();
+    do{imprime_tab();
+    char comando;
+    scanf(" %c", &comando);
+    mover(comando);
+
+    }while(!acabou());
+
 
     }
